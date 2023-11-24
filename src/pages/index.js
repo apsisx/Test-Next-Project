@@ -9,24 +9,15 @@ import React, {useRef, useEffect} from "react";
 
 export default function Home() {
     const containerRef = useRef(null);
+
     useEffect(() => {
-        Array.from(document.getElementsByTagName("iframe")).forEach((iframe) => {
-            iframe.contentWindow.addEventListener(
-                "load",
-                () => {
-                    const doc = iframe.contentWindow.document;
-                    iframe.height = doc.body.scrollHeight;
-                },
-                true
-            );
-            iframe.contentWindow.addEventListener(
-                "resize",
-                () => {
-                    iframe.height = iframe.contentWindow.document.body.scrollHeight + 40;
-                },
-                true
-            );
-        });
+        const script = document.createElement("script");
+        script.src = "https://studentpanel.net/widget/ams-widget-loader.js";
+        script.setAttribute("ag", "13059");
+        script.setAttribute("wid", "104");
+        script.className = "amsSearch";
+
+        containerRef.current.appendChild(script);
     }, []);
 
     return (
@@ -39,7 +30,7 @@ export default function Home() {
             </Head>
             <main className={`${styles.main} ${inter.className}`}>
                 <div ref={containerRef} id='script-container'>
-                    <Script type='text/javascript' src='https://test.ams4you.net/webinqcode-12356-1089.html' strategy='beforeInteractive' defer={false}>{`console.log('Hello world!');`}</Script>
+                    {/* Place the Script component directly here */}
                 </div>
             </main>
         </>
